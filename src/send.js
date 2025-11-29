@@ -1,0 +1,30 @@
+;
+import config from "config"
+import Twilio from "twilio"
+const accountSid = config.get(`twilio.account`);
+const authToken = config.get(`twilio.token`)
+const client = new Twilio(accountSid, authToken);
+
+function SMS({
+  body,
+  to,
+  from
+}) {
+  console.log("📲  Sending the message...");
+  client.messages
+    .create({
+      body,
+      to,
+      from
+    })
+    .then(() => {
+      console.log(`👍 Success! Message has been sent to ${to}`);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+module.exports = {
+  SMS
+};
